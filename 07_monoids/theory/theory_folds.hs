@@ -45,7 +45,7 @@ flattenTree (Node left x right) = flattenTree left ++ [x] ++ flattenTree right
 -- How can we generalize this with fold
 foldTree :: (b -> a -> b -> b) -> b -> Tree a -> b
 foldTree f z Leaf = z
-foldTree f z (Node left x right) = f (foldTree f z right) x (foldTree f z left)
+foldTree f z (Node left x right) = f (foldTree f z left) x (foldTree f z right)
 
 -- Sum the trees elements, if numbers
 sumTree' :: (Num a) => Tree a -> a
