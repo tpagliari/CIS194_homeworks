@@ -25,6 +25,6 @@ data Tree a = Leaf a | Node a [Tree a]
 -- Generic fold function for the rose tree
 foldTree :: (a -> [b] -> b) -> Tree a -> b
 foldTree f (Leaf x) = f x []
-foldTree f (Node x subtrees) = f x (map (foldTree f) subtrees)
+foldTree f (Node x forest) = f x (map (foldTree f) forest)
 
 
