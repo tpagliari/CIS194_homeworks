@@ -1,6 +1,6 @@
 module Employee where
 
-import Data.Tree ( Tree(Node) )
+import Data.Tree
 
 -- Employee names are represented by Strings.
 type Name = String

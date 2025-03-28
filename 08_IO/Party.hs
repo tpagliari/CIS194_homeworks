@@ -23,8 +23,8 @@ moreFun x y | x >= y = x | otherwise = y
 data Tree a = Leaf a | Node a [Tree a]
 
 -- Generic fold function for the rose tree
-foldTree :: (a -> [b] -> b) -> Tree a -> b
-foldTree f (Leaf x) = f x []
-foldTree f (Node x forest) = f x (map (foldTree f) forest)
+foldTree :: ([b] -> a -> b) -> b -> Tree a -> b
+foldTree f z (Leaf x) = z
+foldTree f z (Node x forest) = f (map (foldTree f z) forest) x
 
 
