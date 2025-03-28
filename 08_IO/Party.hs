@@ -28,3 +28,14 @@ foldTree f z (Leaf x) = z
 foldTree f z (Node x forest) = f (map (foldTree f z) forest) x
 
 
+-- | The first argument is the “boss” of the current subtree, call him Bob.
+-- | The second argument is a list of the results for each subtree under Bob:
+-- | nextLevel computes the overall best guest list that includes Bob,
+-- and the overall best guest list that doesn’t include Bob
+nextLevel :: Employee -> [(GuestList, GuestList)] -> (GuestList, GuestList)
+nextLevel bob gltuples = (funniest withBob, funniest withoutBob)
+    where withBob    = map fst gltuples
+          withoutBob = map snd gltuples
+
+funniest :: [GuestList] -> GuestList
+funniest = foldr moreFun mempty
