@@ -1,20 +1,13 @@
+module Main where
 import Party
 import Employee
 
-company :: Tree Employee
-company
-  = Node (Emp "Stan" 9)
-    [ Node (Emp "Bob" 2)
-      [ Node (Emp "Joe" 5)
-        [ Node (Emp "John" 1) []
-        , Node (Emp "Sue" 5) []
-        ]
-      , Node (Emp "Fred" 3) []
-      ]
-    , Node (Emp "Sarah" 17)
-      [ Node (Emp "Sam" 4) []
-      ]
-    ]
+main :: IO ()
+main = readFile "company.txt" >>= putStrLn . computeOutput
 
-test :: GuestList
-test = maxFun company
+computeOutput :: String -> String
+computeOutput = formatGL . maxFun . read
+
+formatGL :: GuestList -> String
+formatGL (GL lst fun) = "Total fun: " ++ show fun ++ "\n" ++ unlines employees
+  where employees = map (\(Emp {empName = name}) -> name) lst

@@ -21,6 +21,7 @@ moreFun x y | x >= y = x | otherwise = y
 
 -- Rose tree
 data Tree a = Leaf a | Node a [Tree a]
+    deriving (Show, Read)
 
 -- Generic fold function for the rose tree
 foldTree :: (a -> [b] -> b) -> b -> Tree a -> b
