@@ -23,9 +23,9 @@ moreFun x y | x >= y = x | otherwise = y
 data Tree a = Leaf a | Node a [Tree a]
 
 -- Generic fold function for the rose tree
-foldTree :: ([b] -> a -> b) -> b -> Tree a -> b
+foldTree :: (a -> [b] -> b) -> b -> Tree a -> b
 foldTree f z (Leaf x) = z
-foldTree f z (Node x forest) = f (map (foldTree f z) forest) x
+foldTree f z (Node x forest) = f x (map (foldTree f z) forest)
 
 
 -- | The first argument is the “boss” of the current subtree, call him Bob.
@@ -39,3 +39,8 @@ nextLevel bob gltuples = (funniest withBob, funniest withoutBob)
 
 funniest :: [GuestList] -> GuestList
 funniest = foldr moreFun mempty
+
+
+-- takes a company hierarchy and outputs a fun-maximizing guest list
+maxFun :: Tree Employee -> GuestList
+maxFun = uncurry max . foldTree nextLevel (mempty, mempty)
