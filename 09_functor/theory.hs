@@ -5,7 +5,7 @@ import Prelude hiding (fmap, Functor)
 -- The functor class is defined in Prelude
 -- The first argument of Functor has kind * -> *
 class Functor f where
-  fmap :: (a -> b) -> f a -> f b
+    fmap :: (a -> b) -> f a -> f b
 
 -- Some instances of functor
 instance Functor Maybe where
@@ -27,3 +27,10 @@ instance Functor ((->) e) where
     -- fmap :: (a -> b) -> ((->) e) a -> ((->) e) b
     fmap :: (a -> b) -> (e -> a) -> (e -> b)
     fmap h f = h . f -- it's the function composition operator
+
+
+-- Intuition: (fmap h) is a lift of a function h
+-- from the space D(h) to the f(D(h)) space, where D(h) is the domain of h
+-- This is visible if one applies curry logic:
+class Functor' f where
+    fmap' :: (a -> b) -> (f a -> f b)
