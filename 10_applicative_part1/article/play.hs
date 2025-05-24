@@ -1,5 +1,4 @@
 import Lists
-import Prelude hiding ((<*>))
 
 list :: ZipList Int = ZipList [1, 2, 3]
 f1, f2, f3 :: Int -> Int

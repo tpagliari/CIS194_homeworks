@@ -1,7 +1,7 @@
 module Lists where
+import Prelude hiding ((<*>), Functor, Applicative, fmap, pure)
     
 -- As a demonstration, let's define our own classes
-import Prelude hiding ((<*>), Functor, Applicative)
 class Functor f where
     fmap :: (a -> b) -> f a -> f b
 class Applicative f where
@@ -15,7 +15,7 @@ newtype ZipList a = ZipList { getZipList :: [a] } deriving Show
 
 instance Functor ZipList where
     fmap :: (a -> b) -> ZipList a -> ZipList b
-    fmap f (ZipList xs) = ZipList (map f xs)
+    fmap g (ZipList xs) = ZipList (map g xs)
 
 instance Applicative ZipList where
     pure :: a -> ZipList a
