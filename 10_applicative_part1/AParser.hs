@@ -2,7 +2,7 @@ module AParser where
 
 import Control.Applicative
 import Data.Char
-import Data.Maybe (isJust)
+
 
 -- A parser for a value of type a is a function which takes a String
 -- representing the input to be parsed, and succeeds or fails; if it
@@ -96,7 +96,15 @@ instance Alternative Parser where
     where f str = case runParser p1 str of
                     Just result -> Just result
                     Nothing -> runParser p2 str
-                    
+
   -- using alternative instance for Maybe
   --p1 <|> p2 = Parser f
   --  where f str = runParser p1 str <|> runParser p2 str
+
+-- 5
+-- Parses either an integer value or an uppercase character, and fails otherwise.
+intOrUppercase :: Parser ()
+intOrUppercase = (const () <$> posInt) <|> (const () <$> upperParser)
+
+upperParser :: Parser Char
+upperParser = satisfy isUpper
