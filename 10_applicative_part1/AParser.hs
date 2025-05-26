@@ -2,6 +2,7 @@ module AParser where
 
 import Control.Applicative
 import Data.Char
+import Data.Maybe (isJust)
 
 -- A parser for a value of type a is a function which takes a String
 -- representing the input to be parsed, and succeeds or fails; if it
@@ -79,3 +80,23 @@ abParser = (,) <$> char 'a' <*> char 'b'
 -- A parser that acts in the same way as abParser but returns () instead of ’a’ and ’b’
 abParser_ :: Parser ()
 abParser_ = const () <$> abParser
+
+-- A parser that reads two integer values separated by a space and returns the integer values in a list.
+intPair :: Parser [Integer]
+intPair = (\x y z -> [x, z]) <$> posInt <*> char ' ' <*> posInt
+
+-- 4
+-- Alternative instance for Parser
+instance Alternative Parser where
+  empty :: Parser a
+  empty = Parser (const Nothing)
+
+  (<|>) :: Parser a -> Parser a -> Parser a
+  p1 <|> p2 = Parser f
+    where f str = case runParser p1 str of
+                    Just result -> Just result
+                    Nothing -> runParser p2 str
+                    
+  -- using alternative instance for Maybe
+  --p1 <|> p2 = Parser f
+  --  where f str = runParser p1 str <|> runParser p2 str
